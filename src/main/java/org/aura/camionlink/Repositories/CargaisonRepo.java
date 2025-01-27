@@ -1,2 +1,4 @@
-package org.aura.camionlink.Repositories;public interface CargaisonRepo {
+package org.aura.camionlink.Repositories;
+
+public interface CargaisonRepo {
 }

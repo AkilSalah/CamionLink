@@ -1,2 +1,4 @@
-package org.aura.camionlink.Repositories;public interface AdminRepo {
+package org.aura.camionlink.Repositories;
+
+public interface AdminRepo {
 }

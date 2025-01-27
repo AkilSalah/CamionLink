@@ -1,2 +1,4 @@
-package org.aura.camionlink.Exceptions;public class CargaisonException {
+package org.aura.camionlink.Exceptions;
+
+public class CargaisonException {
 }

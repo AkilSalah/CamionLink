@@ -1,2 +1,4 @@
-package org.aura.camionlink.Repositories;public class ConducteurRepo {
+package org.aura.camionlink.Repositories;
+
+public interface ConducteurRepo {
 }

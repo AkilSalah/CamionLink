@@ -1,2 +1,4 @@
-package org.aura.camionlink.Security;public class JwtService {
+package org.aura.camionlink.Security;
+
+public class JwtService {
 }

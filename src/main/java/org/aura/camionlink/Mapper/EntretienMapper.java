@@ -1,2 +1,4 @@
-package org.aura.camionlink.Mapper;public interface EntretienMapper {
+package org.aura.camionlink.Mapper;
+
+public interface EntretienMapper {
 }

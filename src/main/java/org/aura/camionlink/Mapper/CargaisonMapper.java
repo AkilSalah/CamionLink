@@ -1,2 +1,4 @@
-package org.aura.camionlink.Mapper;public interface CargaisonMapper {
+package org.aura.camionlink.Mapper;
+
+public interface CargaisonMapper {
 }

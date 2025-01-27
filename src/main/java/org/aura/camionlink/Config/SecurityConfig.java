@@ -1,2 +1,4 @@
-package org.aura.camionlink.Config;public class SecurityConfig {
+package org.aura.camionlink.Config;
+
+public class SecurityConfig {
 }

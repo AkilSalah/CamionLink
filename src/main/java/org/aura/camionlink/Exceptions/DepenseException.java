@@ -1,2 +1,4 @@
-package org.aura.camionlink.Exceptions;public class DepenseException {
+package org.aura.camionlink.Exceptions;
+
+public class DepenseException {
 }

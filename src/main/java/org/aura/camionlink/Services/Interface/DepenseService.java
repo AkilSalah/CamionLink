@@ -1,2 +1,4 @@
-package org.aura.camionlink.Services.Implementation;public class DepenseService {
+package org.aura.camionlink.Services.Interface;
+
+public interface DepenseService {
 }

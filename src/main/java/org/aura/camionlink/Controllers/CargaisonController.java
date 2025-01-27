@@ -1,2 +1,4 @@
-package org.aura.camionlink.Controllers;public class CargaisonController {
+package org.aura.camionlink.Controllers;
+
+public class CargaisonController {
 }

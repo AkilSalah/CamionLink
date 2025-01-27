@@ -1,2 +1,4 @@
-package org.aura.camionlink.Exceptions;public class TrajetException {
+package org.aura.camionlink.Exceptions;
+
+public class TrajetException {
 }

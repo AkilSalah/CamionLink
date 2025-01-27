@@ -1,4 +1,4 @@
-package org.aura.camionlink.Services.Interface;
+package org.aura.camionlink.Services.Implementation;
 
-public interface CamionService {
+public class CamionServiceImpl {
 }

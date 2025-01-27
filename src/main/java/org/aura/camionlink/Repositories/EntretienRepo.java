@@ -1,2 +1,4 @@
-package org.aura.camionlink.Repositories;public interface EntretienRepo {
+package org.aura.camionlink.Repositories;
+
+public interface EntretienRepo {
 }

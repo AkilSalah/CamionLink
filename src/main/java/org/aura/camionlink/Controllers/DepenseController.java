@@ -1,2 +1,4 @@
-package org.aura.camionlink.Controllers;public class DepenseController {
+package org.aura.camionlink.Controllers;
+
+public class DepenseController {
 }

@@ -1,2 +1,4 @@
-package org.aura.camionlink.Exceptions;public class GlobalExceptionHandler {
+package org.aura.camionlink.Exceptions;
+
+public class GlobalExceptionHandler {
 }

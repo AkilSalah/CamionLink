@@ -1,2 +1,4 @@
-package org.aura.camionlink.Exceptions;public class UtilisateurException {
+package org.aura.camionlink.Exceptions;
+
+public class UtilisateurException {
 }
