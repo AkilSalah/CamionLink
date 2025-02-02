@@ -24,6 +24,9 @@ public class Camion {
     private String modele;
     private LocalDate annee;
     private CamionEtat etat; 
+
     @OneToMany(mappedBy = "camion", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Trajet> trajets = new ArrayList<>(); 
+    @OneToMany(mappedBy = "camion", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Entretien> entretiens = new ArrayList<>();
 }
