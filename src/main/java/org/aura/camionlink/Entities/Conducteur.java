@@ -7,12 +7,15 @@ import org.aura.camionlink.Entities.Enums.ConducteurStatut;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
+@Entity
 @DiscriminatorValue("CONDUCTEUR")
 @AllArgsConstructor
 @Getter
