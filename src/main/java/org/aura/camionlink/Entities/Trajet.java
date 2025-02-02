@@ -27,4 +27,8 @@ public class Trajet {
     @ManyToOne
     @JoinColumn(name = "conducteur_id")
     private Conducteur conducteur;
+    
+    @ManyToOne
+    @JoinColumn(name = "camion_id")
+    private Camion camion;
 }
