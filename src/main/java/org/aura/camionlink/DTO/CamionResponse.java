@@ -13,6 +13,5 @@ public record CamionResponse(
     String modele,
     LocalDate annee,
     CamionEtat etat
-    // List<Entre>
 ) {
 } 
