@@ -1,8 +1,10 @@
 package org.aura.camionlink.Services.Interface;
 
-import org.aura.camionlink.DTO.UtilisateurDTO;
+import org.aura.camionlink.DTO.AuthenticationResponse;
+import org.aura.camionlink.DTO.LoginRequest;
+import org.aura.camionlink.DTO.RegisterConducteurRequest;
 
 public interface AuthService {
-    UtilisateurDTO register(UtilisateurDTO userDTO);
-    UtilisateurDTO login(UtilisateurDTO userDTO);
+AuthenticationResponse registerConducteur(RegisterConducteurRequest request);
+AuthenticationResponse login(LoginRequest request);
 } 

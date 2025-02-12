@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.DiscriminatorType;
 import jakarta.persistence.Entity;
@@ -15,29 +16,42 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
-@Data
+@Getter
+@Setter
 public abstract class Utilisateur implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private String nom;
+    
+    @Column(nullable = false)
     private String prenom;
+    
+    @Column(nullable = false, unique = true)
     private String email;
+    
+    @Column(nullable = false)
     private String password;
+    
+    @Column(nullable = false)
     private int contact;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_ADMIN")); 
+        String role = this instanceof Admin ? "ROLE_ADMIN" : "ROLE_CONDUCTEUR";
+        return List.of(new SimpleGrantedAuthority(role));
     }
-
     @Override
     public String getUsername() {
-        return this.nom; 
+        return this.email; 
     }
 
     @Override
@@ -48,6 +62,10 @@ public abstract class Utilisateur implements UserDetails {
     @Override
     public boolean isAccountNonLocked() {
         return true; 
+    }
+    @Override
+    public String getPassword() {
+        return this.password;
     }
 
     @Override
