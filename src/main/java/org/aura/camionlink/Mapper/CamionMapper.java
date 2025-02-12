@@ -5,6 +5,7 @@ import org.aura.camionlink.DTO.CamionResponse;
 import org.aura.camionlink.Entities.Camion;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface CamionMapper {
@@ -14,5 +15,11 @@ public interface CamionMapper {
     Camion toEntity(CamionRequest camionRequest);
 
     CamionResponse tCamionResponse(Camion camion);
+
+    @Mapping(target = "entretiens" , ignore = true)
+    @Mapping(target = "trajets" , ignore = true)
+    @Mapping(target = "id", ignore = true)
+    void updateCamionFromRequest(CamionRequest camionRequest , @MappingTarget Camion camion);
+
 
 }
