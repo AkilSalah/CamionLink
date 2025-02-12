@@ -8,6 +8,8 @@ import org.aura.camionlink.Entities.Enums.TrajetStatut;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -27,6 +29,7 @@ public class Trajet {
     private String pointArrivee;
     private LocalDate dateDepart;
     private LocalDate dateArrivee;
+    @Enumerated(EnumType.STRING)
     private TrajetStatut statut;
 
     @ManyToOne

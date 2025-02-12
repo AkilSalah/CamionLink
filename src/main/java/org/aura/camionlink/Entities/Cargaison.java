@@ -3,6 +3,8 @@ package org.aura.camionlink.Entities;
 import org.aura.camionlink.Entities.Enums.CargaisonType;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,6 +19,7 @@ public class Cargaison {
     private long id;
     private String description;
     private double poids;
+    @Enumerated(EnumType.STRING)
     private CargaisonType type;
     
     @OneToOne(mappedBy = "cargaison")
