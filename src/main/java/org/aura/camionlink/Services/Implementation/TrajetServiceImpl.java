@@ -28,7 +28,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Transactional
 public class TrajetServiceImpl implements TrajetService {
-    
+
     private final TrajetRepo trajetRepository;
     private final ConducteurRepo conducteurRepository;
     private final CamionRepo camionRepository;
@@ -38,34 +38,33 @@ public class TrajetServiceImpl implements TrajetService {
     @Override
     public TrajetResponse createTrajet(TrajetRequest request) {
 
-        Conducteur conducteur = conducteurRepository.findById(request.conducteur_id())
-                .orElseThrow(() -> new ConducteurException (request.conducteur_id()));
-        Camion camion = camionRepository.findById(request.camion_id())
-                .orElseThrow(() -> new CamionException(request.camion_id()));
-        Cargaison cargaison = cargaisonRepository.findById(request.cargaison_id())
-                .orElseThrow(() -> new CargaisonException(request.cargaison_id()));
+        Conducteur conducteur = conducteurRepository.findById(request.conducteurId())
+                .orElseThrow(() -> new ConducteurException (request.conducteurId()));
+        Camion camion = camionRepository.findById(request.camionId())
+                .orElseThrow(() -> new CamionException(request.camionId()));
+        Cargaison cargaison = cargaisonRepository.findById(request.cargaisonId())
+                .orElseThrow(() -> new CargaisonException(request.cargaisonId()));
 
         Trajet trajet = trajetMapper.toEntity(request);
         trajet.setConducteur(conducteur);
         trajet.setCamion(camion);
         trajet.setCargaison(cargaison);
-
         Trajet savedTrajet = trajetRepository.save(trajet);
-        return trajetMapper.toTrajetResponse(savedTrajet);
+        return trajetMapper.toResponse(savedTrajet);
     }
 
     @Override
     public TrajetResponse getTrajetById(Long id) {
         Trajet trajet = trajetRepository.findById(id)
                 .orElseThrow(() -> new TrajetException(id));
-        return trajetMapper.toTrajetResponse(trajet);
+        return trajetMapper.toResponse(trajet);
     }
 
     @Override
     public List<TrajetResponse> getAllTrajets() {
         return trajetRepository.findAll()
                 .stream()
-                .map(trajetMapper::toTrajetResponse)
+                .map(trajetMapper::toResponse)
                 .collect(Collectors.toList());
     }
 
@@ -76,24 +75,24 @@ public class TrajetServiceImpl implements TrajetService {
 
         trajetMapper.updateTrajetFromRequest(request, trajet);
 
-        if (request.conducteur_id() != null) {
-            Conducteur conducteur = conducteurRepository.findById(request.conducteur_id())
-                    .orElseThrow(() -> new ConducteurException( request.conducteur_id()));
+        if (request.conducteurId() != null) {
+            Conducteur conducteur = conducteurRepository.findById(request.conducteurId())
+                    .orElseThrow(() -> new ConducteurException( request.conducteurId()));
             trajet.setConducteur(conducteur);
         }
-        if (request.camion_id() != null) {
-            Camion camion = camionRepository.findById(request.camion_id())
-                    .orElseThrow(() -> new CamionException(request.camion_id()));
+        if (request.camionId() != null) {
+            Camion camion = camionRepository.findById(request.camionId())
+                    .orElseThrow(() -> new CamionException(request.camionId()));
             trajet.setCamion(camion);
         }
-        if (request.cargaison_id() != null) {
-            Cargaison cargaison = cargaisonRepository.findById(request.cargaison_id())
-                    .orElseThrow(() -> new CargaisonException(request.cargaison_id()));
+        if (request.cargaisonId() != null) {
+            Cargaison cargaison = cargaisonRepository.findById(request.cargaisonId())
+                    .orElseThrow(() -> new CargaisonException(request.cargaisonId()));
             trajet.setCargaison(cargaison);
         }
 
         Trajet updatedTrajet = trajetRepository.save(trajet);
-        return trajetMapper.toTrajetResponse(updatedTrajet);
+        return trajetMapper.toResponse(updatedTrajet);
     }
 
     @Override

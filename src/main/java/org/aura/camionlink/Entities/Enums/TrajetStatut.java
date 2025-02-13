@@ -4,5 +4,5 @@ public enum TrajetStatut {
     EN_ATTENTE,
     EN_COURS,
     TERMINE,
-    EN_RETARD,
+    EN_RETARD
 }
