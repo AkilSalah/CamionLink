@@ -9,6 +9,6 @@ public interface DepenseService {
     List<DepenseResponse> getDepenses();
     List<DepenseResponse> getDepenseByTrajet(long trajetId);
     DepenseResponse createDepense(DepenseRequest request);
-    DepenseResponse updateDepense(DepenseRequest request);
+    DepenseResponse updateDepense(DepenseRequest request , long id);
     void deleteDepense(long id);   
 }
