@@ -100,4 +100,13 @@ public class TrajetServiceImpl implements TrajetService {
         trajetRepository.findById(id).orElseThrow(() -> new TrajetException(id));
         trajetRepository.deleteById(id);
     }
+
+    @Override
+    public List<TrajetResponse> getConducteurTrajets(Long id){
+        Conducteur conducteur = conducteurRepository.findById(id).orElseThrow(
+            () -> new ConducteurException(id)
+        );
+        List<Trajet> results = trajetRepository.findByConducteur(conducteur);
+        return results.stream().map(trajetMapper::toResponse).collect(Collectors.toList());
+    }
 }

@@ -20,33 +20,37 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+
 @RestController
-@RequestMapping("/api/admin/trajets")
-@PreAuthorize("hasRole('ADMIN')")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class TrajetController {
       private final TrajetService trajetService;
 
-    @PostMapping
+    @PostMapping("/admin/trajets")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TrajetResponse> createTrajet(@RequestBody TrajetRequest request) {
         System.out.println("test : " +request);
         TrajetResponse response = trajetService.createTrajet(request);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("admin/trajets/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TrajetResponse> getTrajetById(@Valid @PathVariable Long id) {
         TrajetResponse response = trajetService.getTrajetById(id);
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping
+    @GetMapping("admin/trajets")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<TrajetResponse>> getAllTrajets() {
         List<TrajetResponse> responses = trajetService.getAllTrajets();
         return ResponseEntity.ok(responses);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("admin/trajets/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TrajetResponse> updateTrajet(
             @Valid 
             @PathVariable Long id,
@@ -56,10 +60,18 @@ public class TrajetController {
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("admin/trajets/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteTrajet(@PathVariable Long id) {
         trajetService.deleteTrajet(id);
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("conducteur/{id}/trajets")
+    @PreAuthorize("hasRole('CONDUCTEUR')")
+    public ResponseEntity<List<TrajetResponse>> getConducteurTrajets(@PathVariable Long id) {
+        List<TrajetResponse> trajets = trajetService.getConducteurTrajets(id);
+        return ResponseEntity.ok(trajets);
+    }
+    
 }
