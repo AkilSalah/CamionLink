@@ -7,6 +7,7 @@ import org.aura.camionlink.DTO.DepenseRequest;
 import org.aura.camionlink.DTO.DepenseResponse;
 import org.aura.camionlink.Entities.Depense;
 import org.aura.camionlink.Entities.Trajet;
+import org.aura.camionlink.Entities.Enums.DepenseStatut;
 import org.aura.camionlink.Exceptions.DepenseException;
 import org.aura.camionlink.Exceptions.TrajetException;
 import org.aura.camionlink.Mapper.DepenseMapper;
@@ -47,7 +48,6 @@ public class DepenseServiceImpl implements DepenseService {
 
     @Override
     public DepenseResponse createDepense(DepenseRequest request) {
-        // Récupérer le trajet associé
         Trajet trajet = trajetRepository.findById(request.trajetId())
                 .orElseThrow(() -> new TrajetException(request.trajetId()));
 
@@ -75,5 +75,15 @@ public class DepenseServiceImpl implements DepenseService {
             throw new DepenseException(id);
         }
         depenseRepository.deleteById(id);
+    }
+
+    @Override
+    public DepenseResponse validateDepense(long id , DepenseStatut statut){
+        Depense existingDepense = depenseRepository.findById(id).orElseThrow(
+            () -> new DepenseException(id)
+        );
+        existingDepense.setStatut(statut);
+        Depense updatedDepense = depenseRepository.save(existingDepense);
+        return depenseMapper.toResponse(updatedDepense);
     }
 }
