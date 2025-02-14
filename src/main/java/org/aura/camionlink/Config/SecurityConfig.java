@@ -61,7 +61,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/error").permitAll()
                 .requestMatchers("/api/admin/**").hasAnyAuthority("ROLE_ADMIN")
-                .requestMatchers("/api/conducteur/**").hasAnyAuthority("ROLE_CONDUCTEUR")
+                .requestMatchers("/api/conducteur/**").hasAnyAuthority("ROLE_CONDUCTEUR", "ROLE_ADMIN")
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session

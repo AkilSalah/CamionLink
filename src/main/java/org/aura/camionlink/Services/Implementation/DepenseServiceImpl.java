@@ -50,6 +50,7 @@ public class DepenseServiceImpl implements DepenseService {
     public DepenseResponse createDepense(DepenseRequest request) {
         Trajet trajet = trajetRepository.findById(request.trajetId())
                 .orElseThrow(() -> new TrajetException(request.trajetId()));
+                
 
         Depense depense = depenseMapper.toEntity(request);
         depense.setTrajet(trajet);
