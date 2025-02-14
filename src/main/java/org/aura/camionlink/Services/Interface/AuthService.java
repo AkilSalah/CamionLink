@@ -7,4 +7,6 @@ import org.aura.camionlink.DTO.RegisterConducteurRequest;
 public interface AuthService {
 AuthenticationResponse registerConducteur(RegisterConducteurRequest request);
 AuthenticationResponse login(LoginRequest request);
+void AddToken(String token);
+Boolean GetTokens(String token);
 } 

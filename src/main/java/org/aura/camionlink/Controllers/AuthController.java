@@ -28,5 +28,11 @@ public class AuthController {
         log.info("Tentative de connexion pour: {}", request.getEmail());
         return ResponseEntity.ok(authService.login(request));
     }
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@RequestHeader(name = "Authorization") String token ) {
+        String jwt = token.substring(7);
+        authService.AddToken(jwt);
+        return ResponseEntity.ok().body("Successfully logged out");
+    }
 }
 

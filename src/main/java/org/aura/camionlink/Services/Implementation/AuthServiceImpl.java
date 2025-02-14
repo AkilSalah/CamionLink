@@ -1,6 +1,9 @@
 package org.aura.camionlink.Services.Implementation;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.aura.camionlink.DTO.AuthenticationResponse;
 import org.aura.camionlink.DTO.LoginRequest;
 import org.aura.camionlink.DTO.RegisterConducteurRequest;
@@ -25,6 +28,8 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final ConducteurMapper conducteurMapper;
+     List<String> BlackTokens = new ArrayList<>();
+
 
     @Override
     public AuthenticationResponse registerConducteur(RegisterConducteurRequest request) {
@@ -79,6 +84,15 @@ public class AuthServiceImpl implements AuthService {
             log.error("Erreur lors de la connexion: ", e);
             throw new RuntimeException(e.getMessage());
         }
+    }
+    @Override
+    public void AddToken(String token) {
+        BlackTokens.add(token);
+    }
+
+    @Override
+    public Boolean GetTokens(String token) {
+        return BlackTokens.contains(token);
     }
 }
 
