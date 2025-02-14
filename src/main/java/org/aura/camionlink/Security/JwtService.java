@@ -12,6 +12,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 
+import org.aura.camionlink.Entities.Utilisateur;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -37,6 +38,11 @@ public class JwtService {
 
  public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
+
+        if (userDetails instanceof Utilisateur) { 
+            Utilisateur user = (Utilisateur) userDetails; 
+            claims.put("id", user.getId()); 
+        }
         claims.put("roles", userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList()));
