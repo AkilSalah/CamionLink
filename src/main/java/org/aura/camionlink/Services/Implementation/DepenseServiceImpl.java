@@ -63,6 +63,10 @@ public class DepenseServiceImpl implements DepenseService {
         Depense depense = depenseRepository.findById(id)
                 .orElseThrow(() -> new DepenseException(id));
 
+        if (depense.getStatut() == DepenseStatut.VALIDEE || depense.getStatut() == DepenseStatut.REFUSEE) {
+            throw new IllegalStateException("Impossible de modifier une dépense validée ou refusée.");
+        }
+
         depenseMapper.updateDepenseFromRequest(request, depense);
 
         Depense updatedDepense = depenseRepository.save(depense);
@@ -71,19 +75,24 @@ public class DepenseServiceImpl implements DepenseService {
 
     @Override
     public void deleteDepense(long id) {
-        if (!depenseRepository.existsById(id)) {
-            throw new DepenseException(id);
+        Depense depense = depenseRepository.findById(id)
+                .orElseThrow(() -> new DepenseException(id));
+
+        if (depense.getStatut() == DepenseStatut.VALIDEE || depense.getStatut() == DepenseStatut.REFUSEE) {
+            throw new IllegalStateException("Impossible de supprimer une dépense validée ou refusée.");
         }
         depenseRepository.deleteById(id);
     }
 
     @Override
     public DepenseResponse validateDepense(long id , DepenseStatut statut){
-        Depense existingDepense = depenseRepository.findById(id).orElseThrow(
-            () -> new DepenseException(id)
-        );
-        existingDepense.setStatut(statut);
-        Depense updatedDepense = depenseRepository.save(existingDepense);
+
+        if (statut != DepenseStatut.VALIDEE && statut != DepenseStatut.REFUSEE) {
+            throw new IllegalArgumentException("Statut invalide. Doit être VALIDEE ou REFUSEE.");
+        }
+        depenseRepository.updateStatut(id, statut);
+        Depense updatedDepense = depenseRepository.findById(id)
+            .orElseThrow(() -> new DepenseException(id));
         return depenseMapper.toResponse(updatedDepense);
     }
 }

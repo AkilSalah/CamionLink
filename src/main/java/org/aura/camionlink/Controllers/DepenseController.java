@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.aura.camionlink.DTO.DepenseRequest;
 import org.aura.camionlink.DTO.DepenseResponse;
+import org.aura.camionlink.Entities.Enums.DepenseStatut;
 import org.aura.camionlink.Services.Interface.DepenseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,40 +16,41 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/depenses")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class DepenseController {
 
      private final DepenseService depenseService;
 
-    @GetMapping
+    @GetMapping("/admin/depenses")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<List<DepenseResponse>> getDepenses() {
         List<DepenseResponse> depenses = depenseService.getDepenses();
         return ResponseEntity.ok(depenses);
     }
 
-    @GetMapping("/trajet/{trajetId}")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN', 'ROLE_CONDUCTEUR')")
+    @GetMapping("/conducteur/depenses/trajet/{trajetId}")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_CONDUCTEUR')")
     public ResponseEntity<List<DepenseResponse>> getDepenseByTrajet(@PathVariable long trajetId) {
         List<DepenseResponse> depenses = depenseService.getDepenseByTrajet(trajetId);
         return ResponseEntity.ok(depenses);
     }
 
-    @PostMapping
+    @PostMapping("/conducteur/depenses")
     @PreAuthorize("hasAuthority('ROLE_CONDUCTEUR')")
     public ResponseEntity<DepenseResponse> createDepense(@Valid @RequestBody DepenseRequest request) {
         DepenseResponse depense = depenseService.createDepense(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(depense);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/conducteur/depenses/{id}")
     @PreAuthorize("hasAuthority('ROLE_CONDUCTEUR')")
     public ResponseEntity<DepenseResponse> updateDepense(
             @PathVariable long id,
@@ -57,10 +59,19 @@ public class DepenseController {
         return ResponseEntity.ok(depense);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/conducteur/depenses/{id}")
     @PreAuthorize("hasAuthority('ROLE_CONDUCTEUR')")
     public ResponseEntity<Void> deleteDepense(@PathVariable long id) {
         depenseService.deleteDepense(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("admin/depenses/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<DepenseResponse> validateDepense(@PathVariable long id,
+     @RequestParam DepenseStatut statut ){
+        DepenseResponse depenseValidated =  depenseService.validateDepense(id, statut);
+        return ResponseEntity.ok(depenseValidated);
+     }
+
 }
