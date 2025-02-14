@@ -2,6 +2,7 @@ package org.aura.camionlink.Mapper;
 import org.aura.camionlink.DTO.ConducteurResponse;
 import org.aura.camionlink.DTO.RegisterConducteurRequest;
 import org.aura.camionlink.Entities.Conducteur;
+import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -17,7 +18,7 @@ public interface ConducteurMapper {
     ConducteurResponse toResponse(Conducteur conducteur);
     
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "password" ,ignore = true)
+    @Mapping(target = "password", ignore = true) 
     void updateConducteurFromRequest(RegisterConducteurRequest request, @MappingTarget Conducteur conducteur);
 
 }

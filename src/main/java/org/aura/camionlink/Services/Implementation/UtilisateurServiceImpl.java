@@ -10,6 +10,7 @@ import org.aura.camionlink.Exceptions.ConducteurException;
 import org.aura.camionlink.Mapper.ConducteurMapper;
 import org.aura.camionlink.Repositories.ConducteurRepo;
 import org.aura.camionlink.Services.Interface.UtilisateurService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
@@ -23,6 +24,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
     private final ConducteurRepo conducteurRepository;
     private final ConducteurMapper conducteurMapper;
+    private final PasswordEncoder passwordEncoder;
+
 
     @Override
     public List<ConducteurResponse> getConducteurs() {
@@ -38,7 +41,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
                 .orElseThrow(() -> new ConducteurException(id));
 
         conducteurMapper.updateConducteurFromRequest(request, conducteur);
-
+        if (request.password() != null && !request.password().isEmpty()) {
+            conducteur.setPassword(passwordEncoder.encode(request.password()));
+        }
         Conducteur updatedConducteur = conducteurRepository.save(conducteur);
         return conducteurMapper.toResponse(updatedConducteur);
     }
