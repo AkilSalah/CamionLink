@@ -2,7 +2,6 @@ package org.aura.camionlink.Mapper;
 import org.aura.camionlink.DTO.ConducteurResponse;
 import org.aura.camionlink.DTO.RegisterConducteurRequest;
 import org.aura.camionlink.Entities.Conducteur;
-import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
