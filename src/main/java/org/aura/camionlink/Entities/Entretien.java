@@ -14,12 +14,11 @@ public class Entretien {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private LocalDate dateEntretien;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private EtatEntretien etatEntretien;
     private double cout;
-    @ManyToOne
-    @JoinColumn(name = "camionId")
-    private Camion camion ;
     @OneToOne
-    @JoinColumn(name = "panne_id")
+    @JoinColumn(name = "panne_id", unique = true, nullable = false)
     private Panne panne;
 }

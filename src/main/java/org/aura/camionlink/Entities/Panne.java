@@ -14,8 +14,8 @@ public class Panne {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "camion_id", nullable = false)
-    private Camion camion;
+    @JoinColumn(name = "trajet_id", nullable = false)
+    private Trajet trajet;
 
     private LocalDate datePanne;
     private String description;
@@ -23,6 +23,7 @@ public class Panne {
     @Enumerated(EnumType.STRING)
     private UrgencePanne urgence;
 
-    @OneToOne(mappedBy = "panne")
+    @OneToOne(mappedBy = "panne", cascade = CascadeType.ALL, orphanRemoval = true)
     private Entretien entretien;
+
 }

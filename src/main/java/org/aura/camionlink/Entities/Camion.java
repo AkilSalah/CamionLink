@@ -30,6 +30,5 @@ public class Camion {
 
     @OneToMany(mappedBy = "camion", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Trajet> trajets = new ArrayList<>(); 
-    @OneToMany(mappedBy = "camion", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Entretien> entretiens = new ArrayList<>();
+
 }

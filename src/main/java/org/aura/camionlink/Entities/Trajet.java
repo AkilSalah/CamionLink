@@ -57,6 +57,9 @@ public class Trajet {
     
     @OneToMany(mappedBy = "trajet", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Depense> depenses = new ArrayList<>();
+
+    @OneToMany(mappedBy = "trajet", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Panne> pannes = new ArrayList<>();
     
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cargaison_id", nullable = false)
