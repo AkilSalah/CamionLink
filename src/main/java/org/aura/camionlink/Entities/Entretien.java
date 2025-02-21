@@ -3,13 +3,9 @@ package org.aura.camionlink.Entities;
 import java.time.LocalDate;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Data;
+import org.aura.camionlink.Entities.Enums.EtatEntretien;
 
 @Entity
 @Data
@@ -18,9 +14,12 @@ public class Entretien {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private LocalDate dateEntretien;
-    private String description;
+    private EtatEntretien etatEntretien;
     private double cout;
     @ManyToOne
     @JoinColumn(name = "camionId")
     private Camion camion ;
+    @OneToOne
+    @JoinColumn(name = "panne_id")
+    private Panne panne;
 }

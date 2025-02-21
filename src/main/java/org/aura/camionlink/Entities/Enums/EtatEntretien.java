@@ -6,4 +6,3 @@ public enum EtatEntretien {
     EN_COURS,   
     TERMINE     
 }
-
