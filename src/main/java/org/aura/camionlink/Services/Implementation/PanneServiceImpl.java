@@ -27,14 +27,18 @@ public class PanneServiceImpl implements PanneService {
     private final TrajetRepo trajetRepo;
 
     @Override
-    public PanneResponse createPanne(PanneRequest panneRequest,long conducteurId) {
+    public PanneResponse createPanne(PanneRequest panneRequest, long conducteurId) {
         Trajet existingTrajet = trajetRepo.findById(panneRequest.trajetId()).orElseThrow(
                 () -> new TrajetException(panneRequest.trajetId())
         );
-        if (conducteurId != existingTrajet.getConducteur().getId()){
+
+        if (conducteurId != existingTrajet.getConducteur().getId()) {
             throw new UnauthorizedException("Vous n'êtes pas autorisé à ajouter une panne pour ce trajet.");
         }
+
         Panne panne = panneMapper.toEntity(panneRequest);
+        panne.setTrajet(existingTrajet);
+
         Panne savedPanne = panneRepo.save(panne);
         return panneMapper.toResponse(savedPanne);
     }

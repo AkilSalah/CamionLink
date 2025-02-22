@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api")
 @AllArgsConstructor
 public class PanneController {
 
@@ -41,7 +41,7 @@ public class PanneController {
     }
 
 
-    @GetMapping("admin/pannes")
+    @GetMapping("/admin/pannes")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<PanneResponse>> getAllPannes() {
         List<PanneResponse> panneResponses = panneService.getAllPanne();
