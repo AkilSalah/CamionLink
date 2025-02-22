@@ -6,9 +6,8 @@ import org.aura.camionlink.DTO.PanneResponse;
 import java.util.List;
 
 public interface PanneService {
-    PanneResponse createPanne(PanneRequest panneRequest);
-    PanneResponse deletePanne(Long panneId);
+    PanneResponse createPanne(PanneRequest panneRequest,long conducteurId);
+    void deletePanne(Long panneId,long conducteurId);
     List<PanneResponse> getAllPanne();
     PanneResponse getPanneById(Long panneId);
-
 }

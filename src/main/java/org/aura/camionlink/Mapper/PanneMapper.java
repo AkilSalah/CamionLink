@@ -1,6 +1,7 @@
 package org.aura.camionlink.Mapper;
 
 import org.aura.camionlink.DTO.PanneRequest;
+import org.aura.camionlink.DTO.PanneResponse;
 import org.aura.camionlink.Entities.Panne;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
@@ -9,7 +10,7 @@ import org.mapstruct.MappingTarget;
 public interface PanneMapper {
 
     Panne toEntity(PanneRequest panneRequest);
-    PanneRequest toResponse(Panne panne);
+    PanneResponse toResponse(Panne panne);
 
     void updatePanne(PanneRequest panneRequest, @MappingTarget Panne panne);
 }

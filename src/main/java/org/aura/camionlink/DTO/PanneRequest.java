@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @Builder
 public record PanneRequest (
-        long camionId,
+        long trajetId,
         LocalDate datePanne,
         String description,
         UrgencePanne urgence
