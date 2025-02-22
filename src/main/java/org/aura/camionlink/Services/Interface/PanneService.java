@@ -9,5 +9,6 @@ public interface PanneService {
     PanneResponse createPanne(PanneRequest panneRequest,long conducteurId);
     void deletePanne(Long panneId,long conducteurId);
     List<PanneResponse> getAllPanne();
+    List<PanneResponse> getTrajetPanne(long trajetId,long conducteurId);
     PanneResponse getPanneById(Long panneId);
 }

@@ -64,4 +64,17 @@ public class PanneServiceImpl implements PanneService {
         );
         return panneMapper.toResponse(panne);
     }
+
+    @Override
+    public List<PanneResponse> getTrajetPanne(long trajetId,long conducteurId) {
+        Trajet trajet = trajetRepo.findById(trajetId).orElseThrow(
+                () -> new TrajetException(trajetId)
+        );
+        if (conducteurId != trajet.getConducteur().getId()){
+            throw new UnauthorizedException("Vous n'êtes pas autorisé à consulter les pannes pour ce trajet.");
+        }
+        List<Panne> pannes =  panneRepo.findByTrajet(trajet);
+        return pannes.stream().map(panneMapper::toResponse)
+                .collect(Collectors.toList());
+    }
 }
