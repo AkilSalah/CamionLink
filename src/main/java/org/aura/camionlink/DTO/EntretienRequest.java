@@ -11,5 +11,4 @@ public record EntretienRequest(
          EtatEntretien etatEntretien,
          double cout,
          Long panneId
-) {
-}
+) { }

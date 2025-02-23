@@ -7,6 +7,7 @@ import org.aura.camionlink.DTO.EntretienRequest;
 import org.aura.camionlink.DTO.EntretienResponse;
 import org.aura.camionlink.Entities.Entretien;
 import org.aura.camionlink.Entities.Panne;
+import org.aura.camionlink.Exceptions.EntretienException;
 import org.aura.camionlink.Exceptions.PanneException;
 import org.aura.camionlink.Mapper.EntretienMapper;
 import org.aura.camionlink.Repositories.EntretienRepo;
@@ -39,7 +40,7 @@ public class EntretienServiceImpl implements EntretienService {
     @Override
     public EntretienResponse getEntretien(long id) {
         Entretien entretien = entretienRepo.findById(id).orElseThrow(
-                () -> new PanneException(id)
+                () -> new EntretienException(id)
         );
         return entretienMapper.toResponse(entretien);
     }
