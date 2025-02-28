@@ -9,14 +9,14 @@ import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface CamionMapper {
-    @Mapping(target = "entretiens" , ignore = true)
+//    @Mapping(target = "entretiens" , ignore = true)
     @Mapping(target = "trajets" , ignore = true)
     @Mapping(target = "id", ignore = true)
     Camion toEntity(CamionRequest camionRequest);
 
     CamionResponse tCamionResponse(Camion camion);
 
-    @Mapping(target = "entretiens" , ignore = true)
+//    @Mapping(target = "entretiens" , ignore = true)
     @Mapping(target = "trajets" , ignore = true)
     @Mapping(target = "id", ignore = true)
     void updateCamionFromRequest(CamionRequest camionRequest , @MappingTarget Camion camion);
