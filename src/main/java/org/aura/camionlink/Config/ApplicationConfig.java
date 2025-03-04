@@ -52,14 +52,14 @@ public class ApplicationConfig {
         return new BCryptPasswordEncoder();
     }
 
-     @Bean
-    public Jackson2ObjectMapperBuilderCustomizer jsonCustomizer() {
-        return builder -> {
-            builder.simpleDateFormat("yyyy-MM-dd HH:mm");
-            builder.serializers(new LocalDateTimeSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
-            builder.deserializers(new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
-        };
-    }
+//     @Bean
+//    public Jackson2ObjectMapperBuilderCustomizer jsonCustomizer() {
+//        return builder -> {
+//            builder.simpleDateFormat("yyyy-MM-dd HH:mm");
+//            builder.serializers(new LocalDateTimeSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+//            builder.deserializers(new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+//        };
+//    }
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {

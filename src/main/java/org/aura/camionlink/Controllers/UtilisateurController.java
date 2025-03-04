@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+
+
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -36,7 +38,7 @@ public class UtilisateurController {
         return ResponseEntity.ok(utilisateurService.updateConducteur(request, id));
     }
 
-    @DeleteMapping("admin/conducteur/{id}")
+    @DeleteMapping("admin/conducteurs/{id}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')") 
     public ResponseEntity<Void> deleteConducteur(@PathVariable Long id) {
          utilisateurService.deleteConducteur(id);

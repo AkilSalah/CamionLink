@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.aura.camionlink.Entities.Enums.TrajetStatut;
 
 import jakarta.persistence.CascadeType;
@@ -38,9 +39,11 @@ public class Trajet {
     private String pointArrivee;
     
     @Column(nullable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime dateDepart;
     
     @Column(nullable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime dateArrivee;
     
     @Enumerated(EnumType.STRING)
