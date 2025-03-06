@@ -78,6 +78,9 @@ public class AuthServiceImpl implements AuthService {
             return AuthenticationResponse.builder()
                     .token(token)
                     .type(type)
+                    .nom(user.getNom())
+                    .prenom(user.getPrenom())
+                    .email(user.getEmail())
                     .userId(user.getId())
                     .build();
         } catch (Exception e) {

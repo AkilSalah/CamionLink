@@ -26,6 +26,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     private final ConducteurMapper conducteurMapper;
     private final PasswordEncoder passwordEncoder;
 
+    @Override
+    public ConducteurResponse getConducteurById(Long id) {
+        Conducteur conducteur = conducteurRepository.findById(id).orElseThrow(
+                () -> new ConducteurException(id)
+        );
+        return conducteurMapper.toResponse(conducteur);
+    }
 
     @Override
     public List<ConducteurResponse> getConducteurs() {

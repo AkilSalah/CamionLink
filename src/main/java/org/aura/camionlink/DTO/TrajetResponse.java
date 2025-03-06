@@ -10,10 +10,10 @@ public record TrajetResponse(
         String pointDepart,
         String pointArrivee,
 
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm", shape = JsonFormat.Shape.STRING)
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "UTC")
         LocalDateTime dateDepart,
 
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm", shape = JsonFormat.Shape.STRING)
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "UTC")
         LocalDateTime dateArrivee,
 
         TrajetStatut statut,

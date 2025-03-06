@@ -2,6 +2,9 @@ package org.aura.camionlink.Config;
 
 import java.time.format.DateTimeFormatter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.aura.camionlink.Repositories.UtilisateurRepo;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
@@ -60,6 +63,13 @@ public class ApplicationConfig {
 //            builder.deserializers(new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
 //        };
 //    }
+@Bean
+public ObjectMapper objectMapper() {
+    ObjectMapper objectMapper = new ObjectMapper();
+    objectMapper.registerModule(new JavaTimeModule());
+    objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+    return objectMapper;
+}
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {
