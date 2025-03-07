@@ -5,21 +5,20 @@ import java.util.List;
 import org.aura.camionlink.DTO.ConducteurResponse;
 import org.aura.camionlink.DTO.RegisterConducteurRequest;
 import org.aura.camionlink.DTO.ValidationGroups;
+import org.aura.camionlink.DTO.VerifyPasswordRequest;
+import org.aura.camionlink.Entities.Conducteur;
 import org.aura.camionlink.Entities.Utilisateur;
+import org.aura.camionlink.Exceptions.ConducteurException;
+import org.aura.camionlink.Repositories.ConducteurRepo;
 import org.aura.camionlink.Repositories.UtilisateurRepo;
 import org.aura.camionlink.Services.Interface.UtilisateurService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,6 +28,8 @@ import lombok.RequiredArgsConstructor;
 public class UtilisateurController {
     private final UtilisateurService utilisateurService;
     private final UtilisateurRepo utilisateurRepo;
+    private final ConducteurRepo conducteurRepo;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/conducteur")
     @PreAuthorize("hasAnyAuthority('ROLE_CONDUCTEUR')")
@@ -73,8 +74,6 @@ public class UtilisateurController {
             return ResponseEntity.noContent().build();
         }
     }
-
-
 
     private long getConducteurId() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
