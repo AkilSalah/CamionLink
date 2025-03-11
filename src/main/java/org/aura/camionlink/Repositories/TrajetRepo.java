@@ -9,7 +9,8 @@ import java.util.List;
 
 @Repository
 public interface TrajetRepo extends JpaRepository<Trajet , Long>{
-
     List<Trajet> findByConducteur(Conducteur conducteur);
+    long count();
+    long countByConducteur(Conducteur conducteur);
     
 }

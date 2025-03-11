@@ -105,12 +105,23 @@ public class TrajetServiceImpl implements TrajetService {
 
     @Override
     public List<TrajetResponse> getConducteurTrajets(Long id){
-        Conducteur conducteur = conducteurRepository.findById(id).orElseThrow(
-            () -> new ConducteurException(id)
-        );
+        Conducteur conducteur = conducteurRepository.findById(id)
+                .orElseThrow(() -> new ConducteurException(id));
+
         List<Trajet> results = trajetRepository.findByConducteur(conducteur);
-        return results.stream().map(trajetMapper::toResponse).collect(Collectors.toList());
+
+        boolean hasUnauthorizedTrajet = results.stream()
+                .anyMatch(trajet -> !trajet.getConducteur().getId().equals(id));
+
+        if (hasUnauthorizedTrajet) {
+            throw new UnauthorizedException("Vous n'êtes pas autorisé à récupérer ces trajets.");
+        }
+
+        return results.stream()
+                .map(trajetMapper::toResponse)
+                .collect(Collectors.toList());
     }
+
     @Override
     public TrajetResponse updateTrajetStatus(Long conducteurId, Long trajetId, TrajetStatut statut){
         Trajet trajet = trajetRepository.findById(trajetId).orElseThrow(

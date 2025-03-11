@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CargaisonRepo extends JpaRepository<Cargaison , Long> {
+    long count();
 }

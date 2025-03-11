@@ -5,10 +5,14 @@ import java.util.List;
 import org.aura.camionlink.DTO.TrajetRequest;
 import org.aura.camionlink.DTO.TrajetResponse;
 import org.aura.camionlink.Entities.Enums.TrajetStatut;
+import org.aura.camionlink.Entities.Utilisateur;
+import org.aura.camionlink.Repositories.UtilisateurRepo;
 import org.aura.camionlink.Services.Interface.TrajetService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -29,6 +33,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TrajetController {
       private final TrajetService trajetService;
+      private final UtilisateurRepo utilisateurRepo;
 
     @PostMapping("/admin/trajets")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -73,6 +78,10 @@ public class TrajetController {
     @GetMapping("conducteur/{id}/trajets")
     @PreAuthorize("hasRole('ROLE_CONDUCTEUR')")
     public ResponseEntity<List<TrajetResponse>> getConducteurTrajets(@PathVariable Long id) {
+        Long conduteurId = getConducteurId();
+        if (conduteurId != id) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
         List<TrajetResponse> trajets = trajetService.getConducteurTrajets(id);
         return ResponseEntity.ok(trajets);
     }
@@ -87,5 +96,12 @@ public class TrajetController {
         return ResponseEntity.ok(updatedTrajet);
     }
 
-    
+    private long getConducteurId() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        return utilisateurRepo.findByEmail(email)
+                .map(Utilisateur::getId)
+                .orElseThrow(() -> new UsernameNotFoundException("Utilisateur non trouvé pour l'email : " + email));
+    }
+
 }
