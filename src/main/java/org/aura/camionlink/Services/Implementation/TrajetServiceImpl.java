@@ -3,6 +3,7 @@ package org.aura.camionlink.Services.Implementation;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.aura.camionlink.DTO.ConducteurTrajetStats;
 import org.aura.camionlink.DTO.TrajetRequest;
 import org.aura.camionlink.DTO.TrajetResponse;
 import org.aura.camionlink.Entities.Camion;
@@ -139,5 +140,10 @@ public class TrajetServiceImpl implements TrajetService {
     @Override
     public Long getTrajetCount() {
         return trajetRepository.count();
+    }
+
+    @Override
+    public List<ConducteurTrajetStats> getConducteurTrajetStats() {
+        return trajetRepository.findConducteurTrajetStats();
     }
 }

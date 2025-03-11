@@ -2,6 +2,7 @@ package org.aura.camionlink.Controllers;
 
 import java.util.List;
 
+import org.aura.camionlink.DTO.ConducteurTrajetStats;
 import org.aura.camionlink.DTO.TrajetRequest;
 import org.aura.camionlink.DTO.TrajetResponse;
 import org.aura.camionlink.Entities.Enums.TrajetStatut;
@@ -80,6 +81,13 @@ public class TrajetController {
     public ResponseEntity<Long> countTrajets() {
         return ResponseEntity.ok(trajetService.getTrajetCount());
     }
+    @GetMapping("admin/trajets/stats")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<List<ConducteurTrajetStats>> getConducteurTrajetStats() {
+        return ResponseEntity.ok(trajetService.getConducteurTrajetStats());
+    }
+
+
 
     @GetMapping("conducteur/{id}/trajets")
     @PreAuthorize("hasRole('ROLE_CONDUCTEUR')")
