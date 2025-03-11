@@ -17,13 +17,15 @@ public interface TrajetRepo extends JpaRepository<Trajet , Long>{
         SELECT 
             u.nom AS nom,
             u.prenom AS prenom,
+            u.email AS email,
+            u.id AS id,
             COUNT(t.id) AS nombreTrajets
         FROM 
             utilisateur u
         LEFT JOIN 
             trajets t ON t.conducteur_id = u.id
         GROUP BY 
-            u.id, u.nom, u.prenom
+            u.id;
         """, nativeQuery = true)
     List<ConducteurTrajetStats> findConducteurTrajetStats();
 }
