@@ -11,4 +11,5 @@ public interface CargaisonService {
     List<CargaisonResponse> getAllCargaisons();
     CargaisonResponse updateCargaison(Long id, CargaisonRequest request);
     void deleteCargaison(Long id);
+    Long getCargaisonCount();
 }

@@ -62,6 +62,11 @@ public class UtilisateurController {
         utilisateurService.deleteConducteur(id);
         return ResponseEntity.noContent().build();
     }
+    @GetMapping("admin/conducteurs/count")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    public ResponseEntity<Long> getConducteurCount() {
+        return ResponseEntity.ok(utilisateurService.getConducteurCount());
+    }
 
     @DeleteMapping("conducteur/{id}")
     @PreAuthorize("hasAnyAuthority('ROLE_CONDUCTEUR')")

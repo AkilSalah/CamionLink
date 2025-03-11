@@ -11,4 +11,5 @@ public interface CamionService {
     void deleteCamion(Long id);
     CamionResponse getCamionById(Long id);
     List<CamionResponse> getAllCamions();
+    Long getCamionCount();
 }

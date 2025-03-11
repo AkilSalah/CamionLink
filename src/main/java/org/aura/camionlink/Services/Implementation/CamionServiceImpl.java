@@ -28,7 +28,12 @@ public class CamionServiceImpl implements CamionService {
         return camionMapper.tCamionResponse(saveCamion);
     }
 
-    @Override 
+    @Override
+    public Long getCamionCount() {
+        return camionRepository.countCamion();
+    }
+
+    @Override
     public CamionResponse updateCamion(Long id , CamionRequest camionRequest){
         Camion existingCamion = camionRepository.findById(id).orElseThrow(
             () -> new RuntimeException("Ce camion n'exist pas")

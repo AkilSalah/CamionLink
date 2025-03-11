@@ -9,4 +9,5 @@ public interface UtilisateurService {
     List<ConducteurResponse>getConducteurs();
     ConducteurResponse updateConducteur(RegisterConducteurRequest request , Long id);
     void deleteConducteur(Long id);
+    Long getConducteurCount();
 }

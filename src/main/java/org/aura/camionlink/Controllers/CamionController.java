@@ -53,5 +53,9 @@ public class CamionController {
         List<CamionResponse> responses = camionService.getAllCamions();
         return ResponseEntity.ok(responses);
     }
+    @GetMapping("/count")
+    public ResponseEntity<Long> countCamions() {
+        return ResponseEntity.ok(camionService.getCamionCount());
+    }
 
 }

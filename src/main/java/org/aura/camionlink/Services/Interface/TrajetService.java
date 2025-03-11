@@ -14,4 +14,5 @@ public interface TrajetService {
     void deleteTrajet(Long id);
     List<TrajetResponse> getConducteurTrajets(Long id);
     TrajetResponse updateTrajetStatus(Long conducteurId, Long trajetId, TrajetStatut statut);
+    Long getTrajetCount();
 }

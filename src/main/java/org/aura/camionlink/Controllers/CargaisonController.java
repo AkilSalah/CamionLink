@@ -58,4 +58,9 @@ public class CargaisonController {
         cargaisonService.deleteCargaison(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/count")
+    public ResponseEntity<Long> getCount() {
+        return  ResponseEntity.ok(cargaisonService.getCargaisonCount());
+    }
 }

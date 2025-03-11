@@ -61,4 +61,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
                 .orElseThrow(() -> new ConducteurException(id));
         conducteurRepository.delete(conducteur);
     }
+
+    @Override
+    public Long getConducteurCount() {
+        return conducteurRepository.countConducteur();
+    }
 }

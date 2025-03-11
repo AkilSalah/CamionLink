@@ -75,6 +75,12 @@ public class TrajetController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("admin/trajets/count")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<Long> countTrajets() {
+        return ResponseEntity.ok(trajetService.getTrajetCount());
+    }
+
     @GetMapping("conducteur/{id}/trajets")
     @PreAuthorize("hasRole('ROLE_CONDUCTEUR')")
     public ResponseEntity<List<TrajetResponse>> getConducteurTrajets(@PathVariable Long id) {

@@ -135,4 +135,9 @@ public class TrajetServiceImpl implements TrajetService {
 
         return trajetMapper.toResponse(updatedTrajet);
     }
+
+    @Override
+    public Long getTrajetCount() {
+        return trajetRepository.count();
+    }
 }

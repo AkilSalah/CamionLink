@@ -59,6 +59,11 @@ public class CargaisonServiceImpl implements CargaisonService{
         );
         cargaisonRepository.deleteById(id);  
       }
+
+    @Override
+    public Long getCargaisonCount() {
+        return cargaisonRepository.count();
+    }
 }
 
 
