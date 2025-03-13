@@ -9,7 +9,7 @@ import lombok.Builder;
 
 @Builder
 public record CamionResponse(
-    long id,
+    Long id,
     String marque,
     String modele,
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC")

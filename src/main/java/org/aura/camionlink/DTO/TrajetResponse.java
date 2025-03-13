@@ -3,8 +3,9 @@ package org.aura.camionlink.DTO;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Builder;
 import org.aura.camionlink.Entities.Enums.TrajetStatut;
-
+@Builder
 public record TrajetResponse(
         Long id,
         String pointDepart,

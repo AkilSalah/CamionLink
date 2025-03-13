@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import org.aura.camionlink.Entities.Enums.CamionEtat;
 
 import jakarta.persistence.CascadeType;
@@ -17,6 +20,9 @@ import jakarta.persistence.OneToMany;
 import lombok.Data;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Data
 public class Camion {
     @Id

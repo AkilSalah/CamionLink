@@ -2,6 +2,9 @@ package org.aura.camionlink.Entities;
 
 import java.time.LocalDate;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import org.aura.camionlink.Entities.Enums.DepenseStatut;
 
 import jakarta.persistence.Entity;
@@ -16,6 +19,9 @@ import lombok.Data;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Depense {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
