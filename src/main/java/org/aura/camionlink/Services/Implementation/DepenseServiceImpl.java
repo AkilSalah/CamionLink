@@ -55,6 +55,7 @@ public class DepenseServiceImpl implements DepenseService {
 
         Depense depense = depenseMapper.toEntity(request);
         depense.setTrajet(trajet);
+        depense.setStatut(DepenseStatut.EN_ATTENTE);
 
         return depenseMapper.toResponse(depenseRepository.save(depense));
     }

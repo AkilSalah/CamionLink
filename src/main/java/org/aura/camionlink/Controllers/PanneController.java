@@ -1,6 +1,7 @@
 package org.aura.camionlink.Controllers;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.aura.camionlink.DTO.PanneRequest;
 import org.aura.camionlink.DTO.PanneResponse;
 import org.aura.camionlink.Entities.Utilisateur;
@@ -18,6 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 @AllArgsConstructor
+@Slf4j
 public class PanneController {
 
     private final PanneService panneService;
@@ -28,6 +30,7 @@ public class PanneController {
     @PreAuthorize("hasRole('ROLE_CONDUCTEUR')")
     public ResponseEntity<PanneResponse> createPanne(@RequestBody PanneRequest panneRequest) {
         long conducteurId = getConducteurId();
+        log.info("panneRequest: {}", panneRequest);
         PanneResponse panneResponse = panneService.createPanne(panneRequest, conducteurId);
         return ResponseEntity.status(HttpStatus.CREATED).body(panneResponse);
     }

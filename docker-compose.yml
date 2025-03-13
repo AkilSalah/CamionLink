@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: camionlink-app
+    ports:
+      - "8086:8086"
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/camionLink
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=admin123
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - JWT_SECRET_KEY=404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+    networks:
+      - camionlink-network
+
+  db:
+    image: postgres:15
+    container_name: camionlink-db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=camionLink
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin123
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - camionlink-network
+
+networks:
+  camionlink-network:
+    driver: bridge
+
+volumes:
+  postgres-data:

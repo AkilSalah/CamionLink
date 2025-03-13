@@ -1,6 +1,7 @@
 package org.aura.camionlink.Controllers;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.aura.camionlink.DTO.EntretienRequest;
 import org.aura.camionlink.DTO.EntretienResponse;
 import org.aura.camionlink.Services.Interface.EntretienService;
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/")
 @AllArgsConstructor
+@Slf4j
 public class EntretienController {
 
     private final EntretienService entretienService;
@@ -21,6 +23,7 @@ public class EntretienController {
     @PostMapping("admin/entretiens")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<EntretienResponse> createEntretien(@RequestBody EntretienRequest request) {
+        log.info("entretien request: {}", request);
         EntretienResponse response = entretienService.createEntretien(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
