@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import org.aura.camionlink.DTO.EntretienRequest;
 import org.aura.camionlink.DTO.EntretienResponse;
 import org.aura.camionlink.Entities.Entretien;
+import org.aura.camionlink.Entities.Enums.CamionEtat;
+import org.aura.camionlink.Entities.Enums.EtatEntretien;
+import org.aura.camionlink.Entities.Enums.UrgencePanne;
 import org.aura.camionlink.Entities.Panne;
 import org.aura.camionlink.Exceptions.EntretienException;
 import org.aura.camionlink.Exceptions.PanneException;
@@ -34,6 +37,20 @@ public class EntretienServiceImpl implements EntretienService {
         );
         Entretien entretien = entretienMapper.toEntity(request);
         entretien.setPanne(existingPanne);
+
+        if(entretien.getEtatEntretien().equals(EtatEntretien.EN_ATTENTE)|| entretien.getEtatEntretien().equals(EtatEntretien.EN_COURS)){
+                existingPanne.getTrajet().getCamion().setEtat(CamionEtat.EN_MAINTENANCE);
+                panneRepo.save(existingPanne);
+        }
+        if(entretien.getEtatEntretien().equals(EtatEntretien.TERMINE)){
+            if (existingPanne.getUrgence().equals(UrgencePanne.IMMEDIATE)) {
+                existingPanne.getTrajet().getCamion().setEtat(CamionEtat.EN_MISSION);
+                panneRepo.save(existingPanne);
+            }else {
+                existingPanne.getTrajet().getCamion().setEtat(CamionEtat.DISPONIBLE);
+                panneRepo.save(existingPanne);
+            }
+        }
         return entretienMapper.toResponse(entretienRepo.save(entretien));
     }
 
@@ -55,9 +72,29 @@ public class EntretienServiceImpl implements EntretienService {
     @Override
     public EntretienResponse updateEntretien(EntretienRequest request, long id) {
         Entretien entretien = entretienRepo.findById(id).orElseThrow(
-                () -> new PanneException(id)
+                () -> new EntretienException(id)
         );
-        entretienMapper.updateEntretien(request,entretien);
+
+        EtatEntretien previousState = entretien.getEtatEntretien();
+
+        entretienMapper.updateEntretien(request, entretien);
+
+        if (!previousState.equals(entretien.getEtatEntretien())) {
+            Panne panne = entretien.getPanne();
+
+            if (entretien.getEtatEntretien().equals(EtatEntretien.EN_ATTENTE) ||
+                    entretien.getEtatEntretien().equals(EtatEntretien.EN_COURS)) {
+                panne.getTrajet().getCamion().setEtat(CamionEtat.EN_MAINTENANCE);
+            } else if (entretien.getEtatEntretien().equals(EtatEntretien.TERMINE)) {
+                if (panne.getUrgence().equals(UrgencePanne.IMMEDIATE)) {
+                    panne.getTrajet().getCamion().setEtat(CamionEtat.EN_MISSION);
+                } else {
+                    panne.getTrajet().getCamion().setEtat(CamionEtat.DISPONIBLE);
+                }
+            }
+            panneRepo.save(panne);
+        }
+
         Entretien updatedEntretien = entretienRepo.save(entretien);
         return entretienMapper.toResponse(updatedEntretien);
     }

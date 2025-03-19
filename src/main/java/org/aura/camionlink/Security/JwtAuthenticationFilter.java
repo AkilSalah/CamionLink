@@ -40,7 +40,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             FilterChain filterChain
     ) throws ServletException, IOException {
         
-        // Si c'est un endpoint public, on passe directement
         if (shouldNotFilter(request)) {
             filterChain.doFilter(request, response);
             return;

@@ -4,12 +4,14 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.aura.camionlink.DTO.PanneRequest;
 import org.aura.camionlink.DTO.PanneResponse;
+import org.aura.camionlink.Entities.Enums.CamionEtat;
 import org.aura.camionlink.Entities.Panne;
 import org.aura.camionlink.Entities.Trajet;
 import org.aura.camionlink.Exceptions.PanneException;
 import org.aura.camionlink.Exceptions.TrajetException;
 import org.aura.camionlink.Exceptions.UnauthorizedException;
 import org.aura.camionlink.Mapper.PanneMapper;
+import org.aura.camionlink.Repositories.CamionRepo;
 import org.aura.camionlink.Repositories.PanneRepo;
 import org.aura.camionlink.Repositories.TrajetRepo;
 import org.aura.camionlink.Services.Interface.PanneService;
@@ -25,12 +27,12 @@ public class PanneServiceImpl implements PanneService {
     private final PanneRepo panneRepo;
     private final PanneMapper panneMapper;
     private final TrajetRepo trajetRepo;
+    private final CamionRepo camionRepo;
 
     @Override
     public PanneResponse createPanne(PanneRequest panneRequest, long conducteurId) {
-        Trajet existingTrajet = trajetRepo.findById(panneRequest.trajetId()).orElseThrow(
-                () -> new TrajetException(panneRequest.trajetId())
-        );
+        Trajet existingTrajet = trajetRepo.findById(panneRequest.trajetId())
+                .orElseThrow(() -> new TrajetException(panneRequest.trajetId()));
 
         if (conducteurId != existingTrajet.getConducteur().getId()) {
             throw new UnauthorizedException("Vous n'êtes pas autorisé à ajouter une panne pour ce trajet.");
@@ -39,7 +41,13 @@ public class PanneServiceImpl implements PanneService {
         Panne panne = panneMapper.toEntity(panneRequest);
         panne.setTrajet(existingTrajet);
 
+        existingTrajet.getCamion().setEtat(CamionEtat.HORS_SERVICE);
+
+        camionRepo.save(existingTrajet.getCamion());
+        trajetRepo.save(existingTrajet);
+
         Panne savedPanne = panneRepo.save(panne);
+
         return panneMapper.toResponse(savedPanne);
     }
 

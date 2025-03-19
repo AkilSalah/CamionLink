@@ -9,6 +9,8 @@ import org.aura.camionlink.DTO.TrajetResponse;
 import org.aura.camionlink.Entities.Camion;
 import org.aura.camionlink.Entities.Cargaison;
 import org.aura.camionlink.Entities.Conducteur;
+import org.aura.camionlink.Entities.Enums.CamionEtat;
+import org.aura.camionlink.Entities.Enums.ConducteurStatut;
 import org.aura.camionlink.Entities.Trajet;
 import org.aura.camionlink.Entities.Enums.TrajetStatut;
 import org.aura.camionlink.Exceptions.CamionException;
@@ -49,6 +51,14 @@ public class TrajetServiceImpl implements TrajetService {
                 .orElseThrow(() -> new CargaisonException(request.cargaisonId()));
 
         Trajet trajet = trajetMapper.toEntity(request);
+        if(conducteur.getDisponibilite().equals(ConducteurStatut.EN_CONGE) ||
+           conducteur.getDisponibilite().equals(ConducteurStatut.EN_MISSION) ){
+            throw new IllegalStateException("Le conducteur n'est pas disponible pour un nouveau trajet.");
+        }
+        if(camion.getEtat().equals(CamionEtat.EN_MAINTENANCE) ||
+            camion.getEtat().equals(CamionEtat.HORS_SERVICE)){
+            throw new IllegalStateException("Le camion sélectionné n'est pas en état de rouler.");
+        }
         trajet.setConducteur(conducteur);
         trajet.setCamion(camion);
         trajet.setCargaison(cargaison);
@@ -124,14 +134,28 @@ public class TrajetServiceImpl implements TrajetService {
     }
 
     @Override
-    public TrajetResponse updateTrajetStatus(Long conducteurId, Long trajetId, TrajetStatut statut){
+    @Transactional
+    public TrajetResponse updateTrajetStatus(Long conducteurId, Long trajetId, TrajetStatut statut) {
         Trajet trajet = trajetRepository.findById(trajetId).orElseThrow(
-            ()-> new TrajetException(trajetId)
+                () -> new TrajetException(trajetId)
         );
-        if(!trajet.getConducteur().getId().equals(conducteurId)){
+
+        if (!trajet.getConducteur().getId().equals(conducteurId)) {
             throw new UnauthorizedException("Vous n'êtes pas autorisé à modifier ce trajet.");
         }
+
         trajet.setStatut(statut);
+
+        if (statut == TrajetStatut.EN_COURS || statut == TrajetStatut.EN_RETARD) {
+            trajet.getConducteur().setDisponibilite(ConducteurStatut.EN_MISSION);
+            trajet.getCamion().setEtat(CamionEtat.EN_MISSION);
+        } else if (statut == TrajetStatut.TERMINE) {
+            trajet.getConducteur().setDisponibilite(ConducteurStatut.DISPONIBLE);
+            trajet.getCamion().setEtat(CamionEtat.DISPONIBLE);
+        }
+
+        conducteurRepository.save(trajet.getConducteur());
+        camionRepository.save(trajet.getCamion());
         Trajet updatedTrajet = trajetRepository.save(trajet);
 
         return trajetMapper.toResponse(updatedTrajet);

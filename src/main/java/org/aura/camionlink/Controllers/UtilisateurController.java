@@ -37,6 +37,11 @@ public class UtilisateurController {
         Long conducteurId = getConducteurId();
         return ResponseEntity.ok(utilisateurService.getConducteurById(conducteurId));
     }
+    @GetMapping("/conducteur/home")
+    @PreAuthorize("hasAnyAuthority('ROLE_CONDUCTEUR')")
+    public ResponseEntity<List<ConducteurResponse>> getEliteConducteur() {
+        return ResponseEntity.ok(utilisateurService.getEliteConducteur());
+    }
 
     @GetMapping("/admin/conducteurs")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")

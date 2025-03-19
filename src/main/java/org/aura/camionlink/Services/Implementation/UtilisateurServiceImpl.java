@@ -66,4 +66,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     public Long getConducteurCount() {
         return conducteurRepository.countConducteur();
     }
+
+    @Override
+    public List<ConducteurResponse> getEliteConducteur() {
+        List<Conducteur> liste =  conducteurRepository.getEliteConducteur();
+        return liste.stream().map(conducteurMapper::toResponse).collect(Collectors.toList());
+    }
 }
