@@ -2,6 +2,7 @@ package org.aura.camionlink.Controllers;
 
 import java.util.List;
 
+import org.aura.camionlink.DTO.CamionPanneDetails;
 import org.aura.camionlink.DTO.CamionRequest;
 import org.aura.camionlink.DTO.CamionResponse;
 import org.aura.camionlink.Services.Interface.CamionService;
@@ -56,6 +57,11 @@ public class CamionController {
     @GetMapping("/count")
     public ResponseEntity<Long> countCamions() {
         return ResponseEntity.ok(camionService.getCamionCount());
+    }
+
+    @GetMapping("/entretien")
+    public ResponseEntity<List<CamionPanneDetails>> entretienCamions() {
+        return ResponseEntity.ok(camionService.getCamionPanneDetails());
     }
 
 }

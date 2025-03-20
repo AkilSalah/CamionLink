@@ -2,6 +2,7 @@ package org.aura.camionlink.Services.Interface;
 
 import java.util.List;
 
+import org.aura.camionlink.DTO.CamionPanneDetails;
 import org.aura.camionlink.DTO.CamionRequest;
 import org.aura.camionlink.DTO.CamionResponse;
 
@@ -12,4 +13,5 @@ public interface CamionService {
     CamionResponse getCamionById(Long id);
     List<CamionResponse> getAllCamions();
     Long getCamionCount();
+    List<CamionPanneDetails>  getCamionPanneDetails();
 }

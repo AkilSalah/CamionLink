@@ -3,6 +3,7 @@ package org.aura.camionlink.Services.Implementation;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.aura.camionlink.DTO.CamionPanneDetails;
 import org.aura.camionlink.DTO.CamionRequest;
 import org.aura.camionlink.DTO.CamionResponse;
 import org.aura.camionlink.Entities.Camion;
@@ -65,4 +66,8 @@ public class CamionServiceImpl implements CamionService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<CamionPanneDetails> getCamionPanneDetails() {
+        return camionRepository.findCamionPanneDetails();
+    }
 }
