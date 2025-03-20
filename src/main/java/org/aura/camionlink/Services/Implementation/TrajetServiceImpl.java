@@ -11,6 +11,7 @@ import org.aura.camionlink.Entities.Cargaison;
 import org.aura.camionlink.Entities.Conducteur;
 import org.aura.camionlink.Entities.Enums.CamionEtat;
 import org.aura.camionlink.Entities.Enums.ConducteurStatut;
+import org.aura.camionlink.Entities.Enums.StatutCargaison;
 import org.aura.camionlink.Entities.Trajet;
 import org.aura.camionlink.Entities.Enums.TrajetStatut;
 import org.aura.camionlink.Exceptions.CamionException;
@@ -149,12 +150,15 @@ public class TrajetServiceImpl implements TrajetService {
         if (statut == TrajetStatut.EN_COURS || statut == TrajetStatut.EN_RETARD) {
             trajet.getConducteur().setDisponibilite(ConducteurStatut.EN_MISSION);
             trajet.getCamion().setEtat(CamionEtat.EN_MISSION);
+            trajet.getCargaison().setCargaisonStatut(StatutCargaison.EN_COURS);
         } else if (statut == TrajetStatut.TERMINE) {
             trajet.getConducteur().setDisponibilite(ConducteurStatut.DISPONIBLE);
             trajet.getCamion().setEtat(CamionEtat.DISPONIBLE);
+            trajet.getCargaison().setCargaisonStatut(StatutCargaison.LIVREE);
         }
 
         conducteurRepository.save(trajet.getConducteur());
+        cargaisonRepository.save(trajet.getCargaison());
         camionRepository.save(trajet.getCamion());
         Trajet updatedTrajet = trajetRepository.save(trajet);
 

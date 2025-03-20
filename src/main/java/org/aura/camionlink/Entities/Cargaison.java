@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import lombok.Data;
+import org.aura.camionlink.Entities.Enums.StatutCargaison;
 
 @Entity
 @Data
@@ -21,6 +22,8 @@ public class Cargaison {
     private double poids;
     @Enumerated(EnumType.STRING)
     private CargaisonType type;
+    @Enumerated(EnumType.STRING)
+    private StatutCargaison cargaisonStatut = StatutCargaison.EN_COURS;
     
     @OneToOne(mappedBy = "cargaison")
     private Trajet trajet;

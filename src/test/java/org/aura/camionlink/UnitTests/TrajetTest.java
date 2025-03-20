@@ -6,6 +6,7 @@ import org.aura.camionlink.Entities.Camion;
 import org.aura.camionlink.Entities.Cargaison;
 import org.aura.camionlink.Entities.Conducteur;
 import org.aura.camionlink.Entities.Enums.CargaisonType;
+import org.aura.camionlink.Entities.Enums.ConducteurStatut;
 import org.aura.camionlink.Entities.Enums.TrajetStatut;
 import org.aura.camionlink.Entities.Trajet;
 import org.aura.camionlink.Exceptions.TrajetException;
@@ -77,6 +78,7 @@ public class TrajetTest {
         conducteur.setId(conducteurId);
         conducteur.setNom("Dupont");
         conducteur.setPrenom("Jean");
+        conducteur.setDisponibilite(ConducteurStatut.DISPONIBLE);
 
         camion = new Camion();
         camion.setId(camionId);

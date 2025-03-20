@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Builder;
+import org.aura.camionlink.Entities.Enums.StatutCargaison;
 
 @Builder
 public record CargaisonRequest(
@@ -16,5 +17,8 @@ public record CargaisonRequest(
     double poids,
 
     @NotNull(message = "Le type de cargaison est obligatoire")
-    CargaisonType type
+    CargaisonType type,
+
+    @NotNull(message = "Le statut de cargaison est obligatoire")
+    StatutCargaison cargaisonStatut
 ) {}
