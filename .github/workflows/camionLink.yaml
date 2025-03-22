@@ -44,3 +44,11 @@ jobs:
           SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/camionLink
           SPRING_DATASOURCE_USERNAME: postgres
           SPRING_DATASOURCE_PASSWORD: admin123
+
+      - name: Déployer vers Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'camionlink'
+          slot-name: 'production'
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: '${{ github.workspace }}/target/*.jar'
