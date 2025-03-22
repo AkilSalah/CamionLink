@@ -22,9 +22,9 @@ public interface CamionRepo extends JpaRepository<Camion,Long> {
     COUNT(e.id) AS nombreEntretiens
     FROM
     public.camion c
-    JOIN trajets t ON c.id = t.camion_id
-    JOIN panne p ON t.id = p.trajet_id
-    JOIN entretien e ON p.id = e.panne_id
+    LEFT JOIN trajets t ON c.id = t.camion_id
+    LEFT JOIN panne p ON t.id = p.trajet_id
+    LEFT JOIN entretien e ON p.id = e.panne_id
     GROUP BY
     c.id, c.marque, c.modele, c.etat, p.description;
     """,nativeQuery = true)

@@ -17,6 +17,18 @@ services:
     networks:
       - camionlink-network
 
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - camionlink-network
+
   db:
     image: postgres:15
     container_name: camionlink-db
@@ -37,3 +49,4 @@ networks:
 
 volumes:
   postgres-data:
+  pgadmin_data:

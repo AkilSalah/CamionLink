@@ -5,6 +5,7 @@ import org.aura.camionlink.DTO.TrajetResponse;
 import org.aura.camionlink.Entities.Camion;
 import org.aura.camionlink.Entities.Cargaison;
 import org.aura.camionlink.Entities.Conducteur;
+import org.aura.camionlink.Entities.Enums.CamionEtat;
 import org.aura.camionlink.Entities.Enums.CargaisonType;
 import org.aura.camionlink.Entities.Enums.ConducteurStatut;
 import org.aura.camionlink.Entities.Enums.TrajetStatut;
@@ -84,6 +85,7 @@ public class TrajetTest {
         camion.setId(camionId);
         camion.setMarque("Volvo");
         camion.setModele("FH16");
+        camion.setEtat(CamionEtat.DISPONIBLE);
 
         cargaison = new Cargaison();
         cargaison.setId(cargaisonId);
