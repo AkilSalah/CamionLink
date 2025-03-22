@@ -45,6 +45,11 @@ jobs:
           SPRING_DATASOURCE_USERNAME: postgres
           SPRING_DATASOURCE_PASSWORD: admin123
 
+      - name: Connexion à Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
       - name: Déployer vers Azure Web App
         uses: azure/webapps-deploy@v2
         with:
