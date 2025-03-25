@@ -102,7 +102,7 @@ public class TrajetController {
         return ResponseEntity.ok(trajets);
     }
 
-    @PatchMapping("conducteur/{conducteurId}/trajets/{trajetId}/statut")
+    @PutMapping("conducteur/{conducteurId}/trajets/{trajetId}/statut")
     @PreAuthorize("hasAuthority('ROLE_CONDUCTEUR')")
     public ResponseEntity<TrajetResponse> updateStatutTrajet(
             @PathVariable Long conducteurId,
